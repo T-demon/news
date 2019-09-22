@@ -2,7 +2,7 @@
  * @Describe: 
  * @Author: Tang
  * @Date: 2019-09-22 00:25:42
- * @LastEditTime: 2019-09-22 14:50:04
+ * @LastEditTime: 2019-09-22 17:13:23
  -->
 <template>
   <div class="login">
@@ -14,25 +14,53 @@
       <span class="iconfont iconnew"></span>
     </div>
     <!-- 输入框 -->
-    <div>
-      <input type="text" />
-    </div>
-    <div>
-      <input type="text" />
-    </div>
+
+    <AuthInput placeholder="手机号码" :value="form.username" @input="handleUsername"></AuthInput>
 
     <!-- 登录按钮 -->
-    <button>登录</button>
+    <button @click="handleSubmit">登录按钮</button>
   </div>
 </template>
 
+
+
+
+
 <script>
-// var AuthInput = import from ""
-export default {};
+import AuthInput from "@/components/AuthInput";
+
+export default {
+  data() {
+    return {
+      form: {
+        username: "",
+        password: ""
+      }
+    };
+  },
+  methods: {
+    handleUsername(value){
+      this.form.username=value;
+    },
+    handleSubmit(){
+      console.log(this.form)
+    }
+    
+  },
+
+  components: {
+    AuthInput
+  }
+};
 </script>
 
-<style lang="less" scoped>
 
+
+
+<style lang="less" scoped>
+.login {
+  padding: 20px;
+}
 .close {
   padding: 20px;
   span {
