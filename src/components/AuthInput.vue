@@ -2,30 +2,60 @@
  * @Describe: 
  * @Author: Tang
  * @Date: 2019-09-22 11:04:12
- * @LastEditTime: 2019-09-22 17:19:25
+ * @LastEditTime: 2019-09-22 19:14:09
  -->
 <template>
   <input
   class="input"
+  :class="{
+        success: status === 'success',
+        error: status === 'error'
+    }"
   :placeholder="placeholder"
   :value="value"
   @input="handleInput"
+  @change="handleChange"
    />
+
+
+
 </template>
 
 <script>
 export default {
+  data () {
+    return {
+      status:''
+    }
+  },
   props: [
       "placeholder",
       "value",
       "name",
-      "rule"
+      "rule",
+      "err_message"
   ],
  methods: {
         handleInput(event){
-            this.$emit("input", event.target.value)
+            const{value} =event.target
+            this.$emit("input", value)
+            if(this.rule){
+              if(this.rule.test(value)){
+                this.status = "success";
+              }else{
+                this.status = "error"
+              }
+            }
+        },
+       handleChange(){
+            if(this.err_message && this.status === "error"){
+                alert(this.err_message);
+                // this.$toast.fail(this.err_message)
+            }
         }
-    }  
+    }
+
+      
 }	
 
 </script>
@@ -41,5 +71,12 @@ input {
   border-bottom: 1px #666 solid;
   outline: none;
   font-size:20px; 
+}
+
+.success{
+    border-color: blue;
+}
+.error{
+    border-color: red;
 }
 </style>

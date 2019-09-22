@@ -2,7 +2,7 @@
  * @Describe: 
  * @Author: Tang
  * @Date: 2019-09-22 00:25:42
- * @LastEditTime: 2019-09-22 17:13:23
+ * @LastEditTime: 2019-09-22 19:17:56
  -->
 <template>
   <div class="login">
@@ -15,7 +15,22 @@
     </div>
     <!-- 输入框 -->
 
-    <AuthInput placeholder="手机号码" :value="form.username" @input="handleUsername"></AuthInput>
+    <AuthInput
+     placeholder="输入手机号码"
+      :value="form.username"
+       @input="handleUsername"
+       :rule="/^1[0-9]{6,10}$/"
+        err_message="手机号码格式不正确"
+       >
+     </AuthInput>
+
+       <AuthInput
+        placeholder="输入密码"
+        v-model="form.password"
+        :rule="/^[0-9a-zA-Z]{3,12}$/"
+        err_message="密码格式不正确"
+        >
+        </AuthInput>
 
     <!-- 登录按钮 -->
     <button @click="handleSubmit">登录按钮</button>
