@@ -2,7 +2,7 @@
  * @Describe: 
  * @Author: Tang
  * @Date: 2019-09-22 11:04:12
- * @LastEditTime: 2019-09-22 19:14:09
+ * @LastEditTime: 2019-09-22 20:02:06
  -->
 <template>
   <input
@@ -11,10 +11,13 @@
         success: status === 'success',
         error: status === 'error'
     }"
+
   :placeholder="placeholder"
   :value="value"
+  :type="type"
   @input="handleInput"
   @change="handleChange"
+
    />
 
 
@@ -33,7 +36,9 @@ export default {
       "value",
       "name",
       "rule",
-      "err_message"
+      "type",
+      "err_message",
+
   ],
  methods: {
         handleInput(event){

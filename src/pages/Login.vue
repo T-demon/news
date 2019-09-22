@@ -2,7 +2,7 @@
  * @Describe: 
  * @Author: Tang
  * @Date: 2019-09-22 00:25:42
- * @LastEditTime: 2019-09-22 19:17:56
+ * @LastEditTime: 2019-09-22 20:02:50
  -->
 <template>
   <div class="login">
@@ -14,26 +14,29 @@
       <span class="iconfont iconnew"></span>
     </div>
     <!-- 输入框 -->
-
+  <div class="inputs">
     <AuthInput
      placeholder="输入手机号码"
       :value="form.username"
        @input="handleUsername"
        :rule="/^1[0-9]{6,10}$/"
+        type="text"
         err_message="手机号码格式不正确"
        >
      </AuthInput>
-
        <AuthInput
         placeholder="输入密码"
         v-model="form.password"
         :rule="/^[0-9a-zA-Z]{3,12}$/"
         err_message="密码格式不正确"
+        type="password"
         >
         </AuthInput>
+ </div>
+     
 
     <!-- 登录按钮 -->
-    <button @click="handleSubmit">登录按钮</button>
+    <AuthButton text="登录" @click="handleSubmit"></AuthButton>
   </div>
 </template>
 
@@ -43,6 +46,8 @@
 
 <script>
 import AuthInput from "@/components/AuthInput";
+import AuthButton from "@/components/AuthButton"
+
 
 export default {
   data() {
@@ -64,7 +69,8 @@ export default {
   },
 
   components: {
-    AuthInput
+    AuthInput,
+    AuthButton
   }
 };
 </script>
@@ -92,4 +98,10 @@ export default {
     color: #d81e06;
   }
 }
+
+.inputs{
+    input{
+      margin-bottom: 20px;
+    }
+  }
 </style>
