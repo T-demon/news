@@ -2,7 +2,7 @@
  * @Describe: 
  * @Author: Tang
  * @Date: 2019-09-22 00:25:42
- * @LastEditTime: 2019-09-22 09:33:33
+ * @LastEditTime: 2019-09-22 10:59:03
  -->
 <template>
   <div>
@@ -20,8 +20,9 @@ export default {
     }
 }
 </script>
-
+ 
 <style>
+  @import url("http://at.alicdn.com/t/font_1426139_h6vn3jbl5q.css");
   *{
       padding: 0;
       margin: 0;
@@ -35,5 +36,9 @@ export default {
   ul,li,ol{
       list-style: none;
   }
+  i,em{
+      font-style: normal
+  }
+  
 
 </style>
