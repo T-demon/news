@@ -2,7 +2,7 @@
  * @Describe: 
  * @Author: Tang
  * @Date: 2019-09-22 11:04:12
- * @LastEditTime: 2019-09-22 20:02:06
+ * @LastEditTime: 2019-09-22 20:35:02
  -->
 <template>
   <input
@@ -54,8 +54,8 @@ export default {
         },
        handleChange(){
             if(this.err_message && this.status === "error"){
-                alert(this.err_message);
-                // this.$toast.fail(this.err_message)
+                // alert(this.err_message);
+                this.$toast.fail(this.err_message)
             }
         }
     }

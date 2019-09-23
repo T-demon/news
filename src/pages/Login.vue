@@ -2,7 +2,7 @@
  * @Describe: 
  * @Author: Tang
  * @Date: 2019-09-22 00:25:42
- * @LastEditTime: 2019-09-22 20:02:50
+ * @LastEditTime: 2019-09-23 01:51:23
  -->
 <template>
   <div class="login">
@@ -19,7 +19,7 @@
      placeholder="输入手机号码"
       :value="form.username"
        @input="handleUsername"
-       :rule="/^1[0-9]{6,10}$/"
+       :rule="/^1[0-9]{4,10}$/"
         type="text"
         err_message="手机号码格式不正确"
        >
@@ -64,6 +64,19 @@ export default {
     },
     handleSubmit(){
       console.log(this.form)
+      this.$axios({
+        url: "/login",
+        method: "POST",  // method相当于type
+        data: this.form
+        // .then的回调函数相当于success
+      }).then( res => {
+        const {message} = res.data;
+
+        if(message === "登录成功"){
+          // 跳转到首页
+          this.$router.push("/")
+        }
+      });
     }
     
   },
