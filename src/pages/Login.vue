@@ -2,7 +2,7 @@
  * @Describe: 
  * @Author: Tang
  * @Date: 2019-09-22 00:25:42
- * @LastEditTime: 2019-09-23 01:51:23
+ * @LastEditTime: 2019-09-23 16:56:23
  -->
 <template>
   <div class="login">
@@ -32,6 +32,11 @@
         type="password"
         >
         </AuthInput>
+        <p class="tips">
+        没有账号？ 
+        <router-link to="/register">去注册</router-link>
+      </p>
+
  </div>
      
 
@@ -115,6 +120,13 @@ export default {
 .inputs{
     input{
       margin-bottom: 20px;
+    }
+  }
+   .tips{
+    text-align: right;
+    margin-bottom: 20px;
+    a{
+      color:#3385ff;
     }
   }
 </style>
