@@ -2,16 +2,16 @@
  * @Describe: 
  * @Author: Tang
  * @Date: 2019-09-24 14:07:45
- * @LastEditTime: 2019-09-24 16:11:19
+ * @LastEditTime: 2019-09-24 16:21:03
  -->
 <template>
   <div>
     <div class="profile">
-      <img src="../../static/男头像.png" />
+      <img :src="$axios.defaults.baseURL + profile.head_img" alt="">
       <div class="profile-center">
         <div class="name">
           <span class="iconfont iconxingbienan"></span>
-          火星网友
+          {{profile.nickname}}
         </div>
         <div class="time">2019-10-1</div>
       </div>
@@ -34,6 +34,11 @@ export default {
     components:{
         CellBar
     },
+    data () {
+        return {
+            profile:{}
+        }
+    },
     mounted(){
         this.$axios({
             url: "/user/" + localStorage.getItem("user_id"),
@@ -41,7 +46,9 @@ export default {
                Authorization:localStorage.getItem("token") 
             }  
         }).then(res=>{
+            const{data} = res.data
             console.log(res)
+            this.profile=data
         })
     }
 };
