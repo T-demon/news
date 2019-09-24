@@ -2,12 +2,12 @@
  * @Describe: 
  * @Author: Tang
  * @Date: 2019-09-24 14:07:45
- * @LastEditTime: 2019-09-24 16:21:03
+ * @LastEditTime: 2019-09-24 17:18:14
  -->
 <template>
   <div>
     <div class="profile">
-      <img :src="$axios.defaults.baseURL + profile.head_img" alt="">
+   <img :src="profile.head_img" alt="">
       <div class="profile-center">
         <div class="name">
           <span class="iconfont iconxingbienan"></span>
@@ -49,6 +49,11 @@ export default {
             const{data} = res.data
             console.log(res)
             this.profile=data
+              if(data.head_img){
+                this.profile.head_img = this.$axios.defaults.baseURL + this.profile.head_img;
+            }else{
+                 this.profile.head_img = "./static/男头像.png";
+            }
         })
     }
 };

@@ -1,3 +1,9 @@
+/*
+ * @Describe: 
+ * @Author: Tang
+ * @Date: 2019-09-22 00:24:13
+ * @LastEditTime: 2019-09-24 17:14:01
+ */
 const path = require("path");
 
 //  导入提取样式的webpack插件
@@ -11,6 +17,7 @@ const {CleanWebpackPlugin}= require('clean-webpack-plugin');
 
 // 引入vue-loader插件
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 
 
 // webpack的配置
@@ -99,7 +106,11 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: "public/index.html"	// template指定默认html模板
         }),
+        new VueLoaderPlugin(),   // vue加载器插件
 
+        new CopyPlugin([
+            { from: 'static', to: 'static' },
+        ]),
         new VueLoaderPlugin()   // vue加载器插件
     ]
 
