@@ -2,7 +2,7 @@
  * @Describe: 
  * @Author: Tang
  * @Date: 2019-09-22 00:25:42
- * @LastEditTime: 2019-09-24 10:07:27
+ * @LastEditTime: 2019-09-24 14:27:17
  */
 import Vue from "vue";
 
@@ -16,6 +16,7 @@ import VueRouter from "vue-router";
 import App from "@/App";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
+import Personal from "@/pages/Personal";
 import { STATUS_CODES } from "http";
 
 // 在.vue文件中要使用router-link或者router-view.需要注册下插件
@@ -29,7 +30,9 @@ axios.defaults.baseURL = "http://127.0.0.1:3000";
 // 路由：2.创建路由配置
 const routes = [
     { path: "/login", component: Login},
-    { path: "/register", component: Register}
+    { path: "/register", component: Register},
+    { path: "/Personal", component: Personal},
+
 ]
 
 // 路由：3.创建对象
