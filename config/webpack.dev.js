@@ -1,3 +1,9 @@
+/*
+ * @Describe: 
+ * @Author: Tang
+ * @Date: 2019-09-22 00:24:13
+ * @LastEditTime: 2019-09-24 00:43:28
+ */
 const base = require("./webpack.base");
 // 合并webpack的配置
 const merge = require("webpack-merge");
@@ -10,6 +16,7 @@ module.exports = merge( base, {
 
     // + 开发服务配置
     devServer: {
+        // host:'192.168.0.7',
         port: 8000, // 默认端口是8080
         stats: 'errors-only' 
     },
