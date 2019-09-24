@@ -2,7 +2,7 @@
  * @Describe: 
  * @Author: Tang
  * @Date: 2019-09-24 14:07:45
- * @LastEditTime: 2019-09-24 15:40:00
+ * @LastEditTime: 2019-09-24 16:11:19
  -->
 <template>
   <div>
@@ -29,9 +29,20 @@
 <script>
 import CellBar from "@/components/CellBar";
 
+
 export default {
     components:{
         CellBar
+    },
+    mounted(){
+        this.$axios({
+            url: "/user/" + localStorage.getItem("user_id"),
+            headers:{
+               Authorization:localStorage.getItem("token") 
+            }  
+        }).then(res=>{
+            console.log(res)
+        })
     }
 };
 </script>

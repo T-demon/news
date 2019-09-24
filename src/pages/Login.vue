@@ -2,7 +2,7 @@
  * @Describe: 
  * @Author: Tang
  * @Date: 2019-09-22 00:25:42
- * @LastEditTime: 2019-09-23 16:56:23
+ * @LastEditTime: 2019-09-24 16:11:31
  -->
 <template>
   <div class="login">
@@ -75,11 +75,14 @@ export default {
         data: this.form
         // .then的回调函数相当于success
       }).then( res => {
-        const {message} = res.data;
+        const {message,data} = res.data;
 
         if(message === "登录成功"){
-          // 跳转到首页
-          this.$router.push("/")
+          localStorage.setItem('token',data.token)
+          localStorage.setItem('user_id',data.user.id)
+
+          // 跳转到个人中心
+          this.$router.push("/Personal")
         }
       });
     }
@@ -90,7 +93,8 @@ export default {
     AuthInput,
     AuthButton
   }
-};
+}
+
 </script>
 
 
