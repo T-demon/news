@@ -2,7 +2,7 @@
  * @Describe: 
  * @Author: Tang
  * @Date: 2019-09-24 14:07:45
- * @LastEditTime: 2019-09-24 17:18:14
+ * @LastEditTime: 2019-09-24 18:42:27
  -->
 <template>
   <div>
@@ -20,7 +20,7 @@
      <CellBar label="我的关注"  text="关注的用户"></CellBar>
      <CellBar label="我的跟帖"  text="跟帖/回复"></CellBar>
      <CellBar label="我的关注"  text="文章/视频"></CellBar>
-     <CellBar label="设置"></CellBar>
+     <CellBar label="退出" @click="handelLoginout"></CellBar>
 
 
   </div>
@@ -55,7 +55,15 @@ export default {
                  this.profile.head_img = "./static/男头像.png";
             }
         })
-    }
+    },
+    methods: {
+      handelLoginout:function(){
+        localStorage.removeItem("token")
+        localStorage.removeItem("user_id")
+
+        this.$router.replace("/login")
+      }
+    },
 };
 </script>
 

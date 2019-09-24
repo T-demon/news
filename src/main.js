@@ -2,7 +2,7 @@
  * @Describe: 
  * @Author: Tang
  * @Date: 2019-09-22 00:25:42
- * @LastEditTime: 2019-09-24 17:24:43
+ * @LastEditTime: 2019-09-24 17:29:02
  */
 import Vue from "vue";
 
@@ -60,6 +60,10 @@ axios.interceptors.response.use(res=>{
     const{message,statusCode} =res.data
     if(statusCode ===401){
         Toast.fail(message)
+    }
+    if(message === "用户信息验证失败"){
+        // 跳转到登录
+        router.push('/login')
     }
     return res
 })
