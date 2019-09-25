@@ -11,7 +11,7 @@
         <img :src="profile.head_img" alt />
         <div class="profile-center">
           <div class="name">
-            <span class="iconfont iconxingbienan"></span>
+            <span class="iconfont iconxingbienan" @click="this.$router.back()"></span>
             {{profile.nickname}}
           </div>
           <div class="time">2019-10-1</div>
@@ -22,8 +22,10 @@
     <router-link to="/UserFollow">
         <CellBar label="我的关注" text="关注的用户"></CellBar>
     </router-link>
+    <router-link to="/UserComment">
+        <CellBar label="我的跟帖" text="跟帖/回复"></CellBar>
+    </router-link>
     
-    <CellBar label="我的跟帖" text="跟帖/回复"></CellBar>
     <CellBar label="我的关注" text="文章/视频"></CellBar>
     <CellBar label="退出" @click="handelLoginout"></CellBar>
   </div>

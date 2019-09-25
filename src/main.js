@@ -19,7 +19,7 @@ import Register from "@/pages/Register";
 import Personal from "@/pages/Personal";
 import Edit from "@/pages/Edit";
 import UserFollow from "@/pages/UserFollow";
-
+import UserComment from "@/pages/UserComment";
 
 // 在.vue文件中要使用router-link或者router-view.需要注册下插件
 Vue.use(VueRouter);
@@ -36,7 +36,7 @@ const routes = [
     { path: "/Personal", component: Personal},
     { path: "/Edit", component: Edit},
     { path: "/UserFollow", component: UserFollow},
-
+    { path: "/UserComment", component: UserComment},
 
 
 ]
