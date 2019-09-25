@@ -2,7 +2,7 @@
  * @Describe: 
  * @Author: Tang
  * @Date: 2019-09-24 18:56:52
- * @LastEditTime: 2019-09-25 16:40:10
+ * @LastEditTime: 2019-09-25 16:45:24
  -->
 <template>
   <div>
@@ -56,7 +56,7 @@ export default {
       this.$router.push("/");
     },
     afterRead: function(file) {
-      console.log(file);
+      //   console.log(file);
       //构建表单是数据
       const formData = new FormData();
       formData.append("file", file.file);
@@ -67,12 +67,30 @@ export default {
         headers: {
           Authorization: localStorage.getItem("token")
         },
-        data:formData
-      }).then(res=>{
+        data: formData
+      }).then(res => {
         //   console.log(res.data)
-        const{data}=res.data;
+        const { data } = res.data;
 
-        this.profile.head_img=this.$axios.defaults.baseURL+data.url
+        this.profile.head_img = this.$axios.defaults.baseURL + data.url;
+        //修改数据库图片
+        this.$axios({
+          url: `/user_update/` + localStorage.getItem("user_id"),
+          method: "POST",
+          // 添加头信息
+          headers: {
+            Authorization: localStorage.getItem("token")
+          },
+          data: {
+            head_img: data.url
+          }
+        }).then(res => {
+          const { message } = res.data;
+          // 成功的弹窗提示
+          if (message === "修改成功") {
+            this.$toast.success(message);
+          }
+        });
       });
     }
   }
