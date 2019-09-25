@@ -2,7 +2,7 @@
  * @Describe: 
  * @Author: Tang
  * @Date: 2019-09-24 18:56:52
- * @LastEditTime: 2019-09-25 16:55:42
+ * @LastEditTime: 2019-09-25 17:13:42
  -->
 <template>
   <div>
@@ -12,15 +12,11 @@
       <!-- vant上传组件 -->
       <van-uploader :after-read="afterRead" class="uploader" />
     </div>
-    
-    <CellBar label="昵称" :text="profile.nickname" @click="show1 = !show1"/>
-    <van-dialog
-        v-model="show1"
-        title="编辑昵称"
-        show-cancel-button
-        >
-        <!-- value读取昵称 -->
-        <van-field :value="profile.nickname" placeholder="请输入用户名" />
+
+    <CellBar label="昵称" :text="profile.nickname" @click="show1 = !show1" />
+    <van-dialog v-model="show1" title="编辑昵称" show-cancel-button @confirm="handlNickname">
+      <!-- value读取昵称 -->
+      <van-field :value="profile.nickname" placeholder="请输入用户名" ref="nickname" />
     </van-dialog>
 
     <CellBar label="密码" :text="profile.password" type="password"></CellBar>
@@ -40,7 +36,7 @@ export default {
   data() {
     return {
       profile: {},
-      show1:false
+      show1: false
     };
   },
   mounted() {
@@ -102,8 +98,29 @@ export default {
           if (message === "修改成功") {
             this.$toast.success(message);
           }
-        })
-      })
+        });
+      });
+    },
+    handlNickname: function() {
+      const value = this.$refs.nickname.$refs.input.value;
+      // console.log(value)
+      this.$axios({
+        method: "POST",
+        url: "/user_update/" + localStorage.getItem("user_id"),
+        headers: {
+          Authorization: localStorage.getItem("token")
+        },
+        data:{
+            nickname:value
+        }
+      }).then(res=>{
+          const{message} = res.data;
+
+          if(message === "修改成功"){
+              this.profile.nickname=value;
+              this.$toast.success(message)
+          }
+      });
     }
   }
 };
