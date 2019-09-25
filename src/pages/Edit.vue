@@ -2,14 +2,16 @@
  * @Describe: 
  * @Author: Tang
  * @Date: 2019-09-24 18:56:52
- * @LastEditTime: 2019-09-25 14:39:22
+ * @LastEditTime: 2019-09-25 16:40:10
  -->
 <template>
   <div>
+    <HeaderNormal title="编辑资料" />
     <div class="edit-header">
-      <HeaderNormal title="编辑资料" />
+      <img :src="profile.head_img" alt />
+      <!-- vant上传组件 -->
+      <van-uploader :after-read="afterRead" class="uploader" />
     </div>
-    <img :src="profile.head_img" alt />
     <CellBar label="昵称" :text="profile.nickname"></CellBar>
     <CellBar label="密码" :text="profile.password" type="password"></CellBar>
     <CellBar label="性别" text="男"></CellBar>
@@ -52,6 +54,26 @@ export default {
   methods: {
     handelback: function() {
       this.$router.push("/");
+    },
+    afterRead: function(file) {
+      console.log(file);
+      //构建表单是数据
+      const formData = new FormData();
+      formData.append("file", file.file);
+
+      this.$axios({
+        url: "/upload",
+        method: "POST",
+        headers: {
+          Authorization: localStorage.getItem("token")
+        },
+        data:formData
+      }).then(res=>{
+        //   console.log(res.data)
+        const{data}=res.data;
+
+        this.profile.head_img=this.$axios.defaults.baseURL+data.url
+      });
     }
   }
 };
@@ -60,22 +82,27 @@ export default {
 
 <style lang="less" scoped>
 .edit-header {
-  padding: 20px 10px;
+  padding: 20px;
   align-items: center;
+  justify-content: center;
   display: flex;
-  span {
-    flex: 1;
-    text-align: center;
-    font-weight: 600;
+  position: relative;
+  .uploader {
+    position: absolute;
+    opacity: 0;
   }
-}
-img {
-  width: 70 / 360 * 100vw;
-  height: 70 / 360 * 100vw;
-  border-radius: 50%;
-  display: block;
-  margin: 20px auto;
-  //   margin-bottom: 20px;
+  img {
+    width: 70 / 360 * 100vw;
+    height: 70 / 360 * 100vw;
+    border-radius: 50%;
+    display: block;
+    margin: 20px auto;
+    //   margin-bottom: 20px;
+  }
+  /deep/ .van-uploader__upload {
+    width: 70 / 360 * 100vw;
+    height: 70 / 360 * 100vw;
+  }
 }
 </style>>
  
