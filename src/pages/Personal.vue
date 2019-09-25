@@ -2,7 +2,7 @@
  * @Describe: 
  * @Author: Tang
  * @Date: 2019-09-24 14:07:45
- * @LastEditTime: 2019-09-25 16:35:38
+ * @LastEditTime: 2019-09-25 19:15:08
  -->
 <template>
   <div>
@@ -19,8 +19,10 @@
         <i class="iconfont iconjiantou1"></i>
       </div>
     </router-link>
-
-    <CellBar label="我的关注" text="关注的用户"></CellBar>
+    <router-link to="/UserFollow">
+        <CellBar label="我的关注" text="关注的用户"></CellBar>
+    </router-link>
+    
     <CellBar label="我的跟帖" text="跟帖/回复"></CellBar>
     <CellBar label="我的关注" text="文章/视频"></CellBar>
     <CellBar label="退出" @click="handelLoginout"></CellBar>

@@ -2,7 +2,7 @@
  * @Describe: 
  * @Author: Tang
  * @Date: 2019-09-22 00:25:42
- * @LastEditTime: 2019-09-25 14:21:27
+ * @LastEditTime: 2019-09-25 19:14:05
  */
 import Vue from "vue";
 
@@ -18,6 +18,7 @@ import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import Personal from "@/pages/Personal";
 import Edit from "@/pages/Edit";
+import UserFollow from "@/pages/UserFollow";
 
 
 // 在.vue文件中要使用router-link或者router-view.需要注册下插件
@@ -34,6 +35,8 @@ const routes = [
     { path: "/register", component: Register},
     { path: "/Personal", component: Personal},
     { path: "/Edit", component: Edit},
+    { path: "/UserFollow", component: UserFollow},
+
 
 
 ]
