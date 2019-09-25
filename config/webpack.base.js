@@ -2,7 +2,7 @@
  * @Describe: 
  * @Author: Tang
  * @Date: 2019-09-22 00:24:13
- * @LastEditTime: 2019-09-24 17:14:01
+ * @LastEditTime: 2019-09-25 14:30:12
  */
 const path = require("path");
 
@@ -111,7 +111,6 @@ module.exports = {
         new CopyPlugin([
             { from: 'static', to: 'static' },
         ]),
-        new VueLoaderPlugin()   // vue加载器插件
     ]
 
 }

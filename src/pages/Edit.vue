@@ -2,16 +2,16 @@
  * @Describe: 
  * @Author: Tang
  * @Date: 2019-09-24 18:56:52
- * @LastEditTime: 2019-09-25 14:23:17
+ * @LastEditTime: 2019-09-25 14:39:22
  -->
 <template>
   <div>
     <div class="edit-header">
-         <HeaderNormal title="编辑资料"/>
+      <HeaderNormal title="编辑资料" />
     </div>
-    <img :src="profile.head_img" alt="">
+    <img :src="profile.head_img" alt />
     <CellBar label="昵称" :text="profile.nickname"></CellBar>
-    <CellBar label="密码" text="******"></CellBar>
+    <CellBar label="密码" :text="profile.password" type="password"></CellBar>
     <CellBar label="性别" text="男"></CellBar>
   </div>
 </template>
@@ -25,36 +25,36 @@ export default {
     CellBar,
     HeaderNormal
   },
-   data () {
-        return {
-            profile:{}
-        }
-    },
-   mounted(){
-        this.$axios({
-            method:"POST",
-            url: "/user_update/" + localStorage.getItem("user_id"),
-            headers:{
-               Authorization:localStorage.getItem("token") 
-            }  
-        }).then(res=>{
-            const{data} = res.data
-            console.log(res)
-            this.profile=data
-              if(data.head_img){
-                this.profile.head_img = this.$axios.defaults.baseURL + this.profile.head_img;
-            }else{
-                 this.profile.head_img = "./static/男头像.png";
-            }
-        })
-    },
-    methods: {
-      handelback:function(){
-        this.$router.push("/")
+  data() {
+    return {
+      profile: {}
+    };
+  },
+  mounted() {
+    this.$axios({
+      url: "/user/" + localStorage.getItem("user_id"),
+      headers: {
+        Authorization: localStorage.getItem("token")
       }
-    }
-};
+    }).then(res => {
+      const { data } = res.data;
+      console.log(res);
+      this.profile = data;
+      if (data.head_img) {
+        this.profile.head_img =
+          this.$axios.defaults.baseURL + this.profile.head_img;
+      } else {
+        this.profile.head_img = "./static/男头像.png";
+      }
+    });
+  },
 
+  methods: {
+    handelback: function() {
+      this.$router.push("/");
+    }
+  }
+};
 </script>
   
 

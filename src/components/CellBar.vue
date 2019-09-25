@@ -2,13 +2,13 @@
  * @Describe: 
  * @Author: Tang
  * @Date: 2019-09-24 15:08:50
- * @LastEditTime: 2019-09-24 15:40:40
+ * @LastEditTime: 2019-09-25 14:38:44
  -->
 <template>
   <div class="Cell-wrap" @click="$emit('click',$event)">
     <div class="cell">
       <span>{{label}}</span>
-      <i>{{text}}</i>
+      <i>{{type==="password"? "******":text}}</i>
       <span class="iconfont iconjiantou1"></span>
     </div>
   </div>
@@ -17,7 +17,7 @@
 <script>
 export default {
 
-    props:["label","text"]
+    props:["label","text","type"]
 };
 </script>
 
