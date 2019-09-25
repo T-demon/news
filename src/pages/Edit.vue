@@ -2,7 +2,7 @@
  * @Describe: 
  * @Author: Tang
  * @Date: 2019-09-24 18:56:52
- * @LastEditTime: 2019-09-25 16:45:24
+ * @LastEditTime: 2019-09-25 16:55:42
  -->
 <template>
   <div>
@@ -12,7 +12,17 @@
       <!-- vant上传组件 -->
       <van-uploader :after-read="afterRead" class="uploader" />
     </div>
-    <CellBar label="昵称" :text="profile.nickname"></CellBar>
+    
+    <CellBar label="昵称" :text="profile.nickname" @click="show1 = !show1"/>
+    <van-dialog
+        v-model="show1"
+        title="编辑昵称"
+        show-cancel-button
+        >
+        <!-- value读取昵称 -->
+        <van-field :value="profile.nickname" placeholder="请输入用户名" />
+    </van-dialog>
+
     <CellBar label="密码" :text="profile.password" type="password"></CellBar>
     <CellBar label="性别" text="男"></CellBar>
   </div>
@@ -29,7 +39,8 @@ export default {
   },
   data() {
     return {
-      profile: {}
+      profile: {},
+      show1:false
     };
   },
   mounted() {
@@ -55,6 +66,7 @@ export default {
     handelback: function() {
       this.$router.push("/");
     },
+    //处理图片
     afterRead: function(file) {
       //   console.log(file);
       //构建表单是数据
@@ -90,8 +102,8 @@ export default {
           if (message === "修改成功") {
             this.$toast.success(message);
           }
-        });
-      });
+        })
+      })
     }
   }
 };
