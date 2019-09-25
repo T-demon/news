@@ -2,7 +2,7 @@
  * @Describe: 
  * @Author: Tang
  * @Date: 2019-09-22 00:25:42
- * @LastEditTime: 2019-09-24 17:29:02
+ * @LastEditTime: 2019-09-25 14:21:27
  */
 import Vue from "vue";
 
@@ -17,6 +17,8 @@ import App from "@/App";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import Personal from "@/pages/Personal";
+import Edit from "@/pages/Edit";
+
 
 // 在.vue文件中要使用router-link或者router-view.需要注册下插件
 Vue.use(VueRouter);
@@ -31,6 +33,8 @@ const routes = [
     { path: "/login", component: Login},
     { path: "/register", component: Register},
     { path: "/Personal", component: Personal},
+    { path: "/Edit", component: Edit},
+
 
 ]
 
@@ -42,7 +46,7 @@ const router = new VueRouter({
 // 路由守卫
 router.beforeEach((to, from, next) => {
     const hasToken = localStorage.getItem("token")
-    if(to.path === '/personal'){
+    if(to.path === '/personal'||to.path ==="/Edit"){
         if(hasToken){
             next();
         }else{
