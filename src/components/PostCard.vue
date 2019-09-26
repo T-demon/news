@@ -32,6 +32,10 @@
         <img :src="posts.cover[0].url" />
       </div>
 
+      <span class="video-layer">
+        <i class="iconfont iconshipin"></i>
+      </span>
+
       <div class="post-info">
         <span>{{posts.user.nickname}}</span>
         <span>跟贴:{{posts.comment_length}}</span>
@@ -106,6 +110,7 @@ export default {
 }
 .video-cart {
   padding: 20px 10px;
+  position: relative;
   .post-title {
     font-size: 14px;
     line-height: 1.5;
@@ -122,6 +127,23 @@ export default {
       width: 100%;
       height: 170/360 * 100vw;
     }
+  }
+  .video-layer {
+    position: absolute;
+    left: 45%;
+    top: 45%;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    width: 46/360 * 100vw;
+    height: 46/360 * 100vw;
+    background-color: rgba(0, 0, 0, 0.5);
+      i{
+        font-size: 40/360*100vw;
+        color: white;
+      }
   }
   .post-info {
     font-size: 12px;
