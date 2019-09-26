@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 单张图显示 -->
-    <div class="post" v-if="posts.cover.length>0 && posts.cover.length<3">
+    <div class="post" v-if="posts.cover.length>0 && posts.cover.length<3 && posts.type === 1">
       <div class="card-left">
         <div class="post-title">{{posts.title}}</div>
         <div class="post-info">
@@ -25,6 +25,18 @@
       </p>
     </div>
     <!-- 视频显示 -->
+    <div class="video-cart" v-if="posts.type ===2 && posts.cover.length ===1">
+      <div class="post-title">{{posts.title}}</div>
+
+      <div class="video">
+        <img :src="posts.cover[0].url" />
+      </div>
+
+      <div class="post-info">
+        <span>{{posts.user.nickname}}</span>
+        <span>跟贴:{{posts.comment_length}}</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -65,25 +77,55 @@ export default {
   .card-img {
     img {
       height: 80/360 * 100vw;
-      width: 80/360 * 100vw;
+      width: 120/360 * 100vw;
       padding-left: 10px;
       object-fit: cover;
     }
   }
 }
-.img-list {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 5px;
-  img {
-    display: block;
-    width: 33%;
-    height: 80 / 360 * 100vw;
-    object-fit: cover;
+
+.img-cart {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  .img-list {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    img {
+      margin-bottom: 10px;
+      display: block;
+      width: 33%;
+      height: 80 / 360 * 100vw;
+      object-fit: cover;
+    }
+  }
+  .post-info {
+    font-size: 12px;
+    color: #999;
   }
 }
- .post-info{
-     font-size: 12px;
-      color: #999;
+.video-cart {
+  padding: 20px 10px;
+  .post-title {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 5px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
   }
+  .video {
+    margin-bottom: 5px;
+    img {
+      display: block;
+      width: 100%;
+      height: 170/360 * 100vw;
+    }
+  }
+  .post-info {
+    font-size: 12px;
+    color: #999;
+  }
+}
 </style>
