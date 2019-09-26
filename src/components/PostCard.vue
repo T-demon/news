@@ -1,27 +1,38 @@
 <template>
   <div>
-    <div class="post">
+    <!-- 单张图显示 -->
+    <div class="post" v-if="posts.cover.length>0 && posts.cover.length<3">
       <div class="card-left">
-        <div class="post-title">
-          {{posts.title}}
-          </div>
+        <div class="post-title">{{posts.title}}</div>
         <div class="post-info">
           <span>{{posts.user.nickname}}</span>
-          <span>52跟帖</span>
+          <span>跟贴:{{posts.comment_length}}</span>
         </div>
       </div>
       <div class="card-img">
         <img :src="posts.cover[0].url" />
       </div>
     </div>
+    <!-- 多张图显示 -->
+    <div class="img-cart" v-if="posts.cover.length >= 3">
+      <div class="post-title">{{posts.title}}</div>
+      <div class="img-list">
+        <img v-for="(item, index) in posts.cover" :key="index" :src="item.url" v-if="index < 3" />
+      </div>
+      <p class="post-info">
+        <span>{{posts.user.nickname}}</span>
+        <span>{{posts.comment_length}}跟帖</span>
+      </p>
+    </div>
+    <!-- 视频显示 -->
   </div>
 </template>
 
 <script>
 export default {
-  props:["posts"],
-  mounted(){
-   console.log(this.posts)
+  props: ["posts"],
+  mounted() {
+    console.log(this.posts);
   }
 };
 </script>
@@ -46,9 +57,9 @@ export default {
       -webkit-line-clamp: 2;
       overflow: hidden;
     }
-    .post-info{
-        font-size: 12px;
-        color: #999;
+    .post-info {
+      font-size: 12px;
+      color: #999;
     }
   }
   .card-img {
@@ -60,4 +71,19 @@ export default {
     }
   }
 }
+.img-list {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  img {
+    display: block;
+    width: 33%;
+    height: 80 / 360 * 100vw;
+    object-fit: cover;
+  }
+}
+ .post-info{
+     font-size: 12px;
+      color: #999;
+  }
 </style>
