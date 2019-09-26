@@ -20,6 +20,8 @@ import Personal from "@/pages/Personal";
 import Edit from "@/pages/Edit";
 import UserFollow from "@/pages/UserFollow";
 import UserComment from "@/pages/UserComment";
+import index from "@/pages/index";
+
 
 // 在.vue文件中要使用router-link或者router-view.需要注册下插件
 Vue.use(VueRouter);
@@ -31,12 +33,17 @@ axios.defaults.baseURL = "http://127.0.0.1:3000";
 
 // 路由：2.创建路由配置
 const routes = [
+    //个人中心
     { path: "/login", component: Login},
     { path: "/register", component: Register},
     { path: "/Personal", component: Personal},
     { path: "/Edit", component: Edit},
     { path: "/UserFollow", component: UserFollow},
     { path: "/UserComment", component: UserComment},
+
+    //新闻板块
+    { path: "/", component: index},
+
 
 
 ]
