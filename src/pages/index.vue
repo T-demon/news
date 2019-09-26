@@ -15,30 +15,34 @@
 
     <div>
       <van-tabs v-model="active" swipeable>
-        <van-tab v-for="(item,index) in categores" :title="item.name" :key="index">内容{{index}}</van-tab>
+        <van-tab v-for="(item,index) in categores" :title="item.name" :key="index">
+          <PostCard
+          v-for="(item,index) in posts"
+          :key="index"
+          :posts="item"
+          >
+          </PostCard>
+        </van-tab>
       </van-tabs>
     </div>
-
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
   </div>
 </template>
 
 <script>
+import PostCard from"@/components/PostCard"
 export default {
+    components:{
+        PostCard
+    },
     data(){
         return{
          active:localStorage.getItem("token") ? 1 : 0, 
-         categores:[]
+         categores:[],
+         cid:999,
+         posts:[]
         }
     },
   mounted() {
-
         const config = {
             url: "/category",
         }
@@ -50,9 +54,24 @@ export default {
     this.$axios(config).then(res=>{
         console.log(res);
         const{data} = res.data
-        this.categores=data
-        
+        this.categores=data  
     });
+
+    this.$axios({
+            url: `/post?category=${this.cid}`
+        }).then(res => {
+            console.log(res)
+            const {data} = res.data;
+            // 默认赋值给头条的列表
+            this.posts = data;
+        })	      
+  },
+  watch:{
+      active(){
+        //  console.log(this.active)
+        this.cid=this.categores[this.active].id
+        console.log(this.cid)
+      }
   }
 };
 </script>
