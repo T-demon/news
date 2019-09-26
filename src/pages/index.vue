@@ -62,9 +62,20 @@ export default {
       };
     }
     this.$axios(config).then(res => {
-      console.log(res);
+      // console.log(res);
       const { data } = res.data;
-      this.categores = data;
+      const newData = [];
+
+      data.forEach(v => {
+        v.posts = [];
+        v.loading = false;
+        v.finished = false;
+        v.pageIndex = 1;
+        newData.push(v);
+      });
+
+      this.categores = newData;
+      console.log(this.categores)
 
       this.$axios({
         url: `/post?category=${this.cid}&pageIndex=${this.pageIndex}&pageSize=${this.pageSize}`
@@ -95,7 +106,7 @@ export default {
           this.pageIndex++;
           this.loading = false;
         });
-      },2000);
+      }, 2000);
     }
   },
   watch: {
