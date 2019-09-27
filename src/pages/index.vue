@@ -14,18 +14,17 @@
     </div>
 
     <div>
-      <van-tabs v-model="active" swipeable>
+      <van-tabs v-model="active" sticky swipeable>
         <van-tab v-for="(item,index) in categores" :title="item.name" :key="index">
           <van-list
-            :post="item"
-            v-model="loading"
-            :finished="finished"
+            v-model="item.loading"
+            :finished="item.finished"
             finished-text="没有更多了"
             @load="onLoad"
             :immediate-check="false"
           >
             <!-- 文章模块组件，post是单篇文章详情 -->
-            <PostCard v-for="(item, index) in posts" :key="index" :posts="item" />
+            <PostCard v-for="(item, index) in item.posts" :key="index" :posts="item" />
           </van-list>
         </van-tab>
       </van-tabs>
@@ -35,6 +34,7 @@
 
 <script>
 import PostCard from "@/components/PostCard";
+import { log } from "util";
 export default {
   components: {
     PostCard
@@ -44,9 +44,9 @@ export default {
       active: localStorage.getItem("token") ? 1 : 0,
       categores: [],
       cid: 999,
-      posts: [],
-      loading: false,
-      finished: false,
+      // posts: [],
+      // loading: false,
+      // finished: false,
       pageIndex: 1,
       pageSize: 5
     };
@@ -61,50 +61,61 @@ export default {
         Authorization: localStorage.getItem("token")
       };
     }
+    //请求栏目的数据
     this.$axios(config).then(res => {
-      // console.log(res);
       const { data } = res.data;
+      // console.log(data);
       const newData = [];
-
+      // 给每个栏目加四个独立属性
       data.forEach(v => {
         v.posts = [];
         v.loading = false;
         v.finished = false;
-        v.pageIndex = 1;
+        v.pageIndex =1;
         newData.push(v);
       });
 
       this.categores = newData;
-      console.log(this.categores)
+      // console.log(this.categores);
 
+      // 请求文章
       this.$axios({
-        url: `/post?category=${this.cid}&pageIndex=${this.pageIndex}&pageSize=${this.pageSize}`
+        url:`/post?category=${this.cid}&pageIndex=${this.pageIndex}&pageSize=${this.pageSize}`
       }).then(res => {
-        // console.log(res);
+        console.log(res);
         const { data } = res.data;
-        // 默认赋值给头条的列表
-        this.posts = data;
+        // console.log(data);
 
-        this.pageIndex++;
+        // 默认赋值给头条的列表
+        this.categores[this.active].posts = data;
+
+        console.log( this.categores[this.active].posts)
+
+        this.categores[this.active].pageIndex++;
       });
     });
   },
 
   methods: {
-    onLoad: function() {
+    onLoad() {
       setTimeout(() => {
+        console.log("触发onload")
+
+        const category = this.categores[this.active];
+        console.log(category);
+        
         this.$axios({
-          url: `/post?category=${this.cid}&pageIndex=${this.pageIndex}&pageSize=${this.pageSize}`
+          url: `/post?category=${this.cid}&pageIndex=${category.pageIndex}&pageSize=${this.pageSize}`
         }).then(res => {
           // console.log(res);
           const { data } = res.data;
 
           if (data.length < this.pageSize) {
-            this.finished = true;
+            category.finished = true;
           }
-          this.posts = [...this.posts, ...data];
-          this.pageIndex++;
-          this.loading = false;
+          category.posts = [...category.posts, ...data];
+          category.pageIndex++;
+          category.loading = false;
         });
       }, 2000);
     }
@@ -113,7 +124,9 @@ export default {
     active() {
       //  console.log(this.active)
       this.cid = this.categores[this.active].id;
-      // console.log(this.cid);
+      console.log(this.cid);
+
+      this.onLoad()
     }
   }
 };
