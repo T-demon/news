@@ -1,26 +1,21 @@
 <template>
-  <div>
+  <div class="container">
     <div class="detail">
       <div class="detail-header">
-        <span class="iconfont iconjiantou2"></span>
+        <span class="iconfont iconjiantou2" @click="$router.back()"></span>
         <i class="iconfont iconnew"></i>
         <span class="gzbtn">关注</span>
       </div>
-      <h3>火星时报火星时报火星时报火星时报火星时时报</h3>
+      <h3 class="title">{{detail.title}}</h3>
       <div class="detail-info">
-        <span>火星时报</span>
-        <span>201-10-10</span>
+        <span>{{detail.user.nickname}}</span>
+        <span>2019-10-10</span>
       </div>
-      <div class="detail-content">
-        火星时报火星时报火星时报火
-        星时报火星时报火星时星时报火星时
-        报火星时报火星时报火星时报火星时报
-        火星时星时报火星时报火星时报火星时报火星时报火星时报火星时星时报
-      </div>
+      <div class="detail-content" v-html="detail.content"></div>
       <div class="post-btns">
         <span>
           <i class="iconfont icondianzan"></i>
-          112
+          {{detail.like_length}}666
         </span>
         <span>
           <i class="iconfont iconweixin"></i>
@@ -28,9 +23,7 @@
         </span>
       </div>
     </div>
-    <div class="foot">
-      <PostFooter></PostFooter>
-    </div>
+    <PostFooter></PostFooter>
   </div>
 </template>
 
@@ -39,17 +32,39 @@ import PostFooter from "@/components/PostFooter";
 export default {
   components: {
     PostFooter
+  },
+  data() {
+    return {
+      detail: {
+        user: {}
+      }
+    };
+  },
+  mounted() {
+    const { id } = this.$route.params;
+    this.$axios({
+      url: "/post/" + id,
+      methed: "GET"
+    }).then(res => {
+      const { data } = res.data;
+      this.detail = data;
+      console.log(this.detail);
+    });
   }
 };
 </script>
 
 <style lang="less" scoped>
+.container {
+  padding-bottom: 100 / 360 * 100vw;
+}
 .detail {
-  padding: 0px 15px;
   border-bottom: 3px solid #999;
   padding-bottom: 20px;
   .detail-header {
     height: 60/360 * 100vw;
+    // position: fixed;
+    background-color: #fff;
     display: flex;
     width: 100%;
     box-sizing: border-box;
@@ -59,11 +74,16 @@ export default {
       flex: 1;
       font-size: 55/360 * 100vw;
     }
+    title {
+      display: block;
+      margin-top: 60px;
+    }
     .gzbtn {
       display: block;
       padding: 5px 20px;
       background-color: #ff0000;
       font-size: 12px;
+      box-sizing: border-box;
       color: #fff;
       border-radius: 50px;
     }
@@ -71,12 +91,15 @@ export default {
   .detail-info {
     font-size: 12px;
     color: #999;
-    padding: 10px 0;
+    padding: 10px;
   }
   .detail-content {
     margin-top: 10px;
     font-size: 14px;
     line-height: 1.5;
+    /deep/ img {
+      max-width: 100%;
+    }
   }
   .post-btns {
     margin-top: 30px;

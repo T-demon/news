@@ -24,15 +24,16 @@
 export default {
   data() {
     return {
-      isFocus: false
+      isFocus: false,
+      
     };
   },
+ 
   methods: {
     handleFocus() {
       console.log(123);
       this.isFocus = true;
-    },
-     
+    }, 
   }
 };
 </script>
