@@ -42,6 +42,7 @@ export default {
 <style scoped lang="less">
 .foot {
   position: fixed;
+  padding: 0px 15px;
   width: 100%;
   bottom: 0px;
   box-sizing: border-box;
@@ -50,9 +51,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-sizing: border-box;
     background-color: #fff;
-    padding: 10px 5px;
     input {
       width: 60%;
       height: 36 / 360 * 100vw;

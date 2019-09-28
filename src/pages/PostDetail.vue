@@ -16,9 +16,11 @@
 
       <!-- 视频详情的内容 -->
       <div class="video-wrap" v-if="detail.type === 2">
-        <video
-          src="https://video.pearvideo.com/mp4/adshort/20190927/cont-1607446-14434032_adpkg-ad_hd.mp4"
-          class="video"
+         <video 
+        src="https://video.pearvideo.com/mp4/adshort/20190927/cont-1607446-14434032_adpkg-ad_hd.mp4"
+        class="video"
+        controls
+        poster="https://timgmb04.bdimg.com/timg?searchbox_feed&quality=100&wh_rate=0&size=b576_324&ref=http%3A%2F%2Fwww.baidu.com&sec=1568739067&di=612dd27cae470b93b01a4b32ef72fbac&src=http%3A%2F%2Fpic.rmb.bdstatic.com%2Fe18c6ffa079441431f8988ca4c3ac106.jpeg"
         ></video>
 
         <div class="video-info">
@@ -186,7 +188,7 @@ export default {
     }
     .focus {
       display: block;
-      padding: 5px 20px;
+      padding: 5px 15px;
       background-color: #ff0000;
       font-size: 12px;
       box-sizing: border-box;
@@ -237,6 +239,19 @@ export default {
       margin-right: 10px;
     }
   }
+  .focus{
+    padding: 5px 15px;
+    font-size:12px;
+    background:red;
+    color:#fff;
+    border-radius: 100px;
+    border: 1px red solid;
+}
+.focus_active{
+    border: 1px #ccc solid;
+    color:#333;
+    background:none;
+}
   .post-btns {
     margin-top: 30px;
     display: flex;
