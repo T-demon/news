@@ -45,12 +45,14 @@ export default {
 
 <style lang="less" scoped>
 .detail {
-  padding: 0px 20px;
+  padding: 0px 15px;
   border-bottom: 3px solid #999;
   padding-bottom: 20px;
   .detail-header {
     height: 60/360 * 100vw;
     display: flex;
+    width: 100%;
+    box-sizing: border-box;
     justify-content: space-between;
     align-items: center;
     i {
