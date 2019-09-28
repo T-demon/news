@@ -2,10 +2,10 @@
   <div class="container">
     <div class="detail">
       <div class="detail-header">
-        <span class="iconfont iconjiantou2" @click="$router.back()" ></span>
-        <i class="iconfont iconnew" ></i>
+        <span class="iconfont iconjiantou2" @click="$router.back()"></span>
+        <i class="iconfont iconnew"></i>
         <span class="focus" v-if="!detail.has_follow" @click="handleFollow">关注</span>
-        <span class="focus focus_active" v-else  @click="handleUnfollow">已关注</span>
+        <span class="focus focus_active" v-else @click="handleUnfollow">已关注</span>
       </div>
       <h3 class="title">{{detail.title}}</h3>
       <div class="detail-info">
@@ -31,10 +31,13 @@
           <span class="focus focus_active" v-else @click="handleUnfollow">已关注</span>
         </div>
       </div>
+
+      <!-- 点赞 -->
       <div class="post-btns">
-        <span>
+        <span @click="handleLike" :class="{ like_active: detail.has_like }
+        ">
           <i class="iconfont icondianzan"></i>
-          {{detail.like_length}}666
+          {{detail.like_length}}
         </span>
         <span>
           <i class="iconfont iconweixin"></i>
@@ -42,7 +45,7 @@
         </span>
       </div>
     </div>
-    <PostFooter></PostFooter>
+    <PostFooter :post="detail" @handleStar="handleStar"></PostFooter>
   </div>
 </template>
 
@@ -60,55 +63,98 @@ export default {
     };
   },
   mounted() {
-      const {id} = this.$route.params;
-        const token = localStorage.getItem("token");
-        const config = {
-            url: "/post/" + id
-        }
-        if(token){
-            config.headers = {
-                Authorization: token
-            }
-        }
+    const { id } = this.$route.params;
+    const token = localStorage.getItem("token");
+    const config = {
+      url: "/post/" + id
+    };
+    if (token) {
+      config.headers = {
+        Authorization: token
+      };
+    }
 
-        this.$axios(config).then(res => {
-            const {data} = res.data;
-            this.detail = data;
-        })
+    this.$axios(config).then(res => {
+      const { data } = res.data;
+      this.detail = data;
+    });
   },
   methods: {
-    handleFollow(){
-      console.log(123)
-        this.$axios({
-                url: "/user_follows/" + this.detail.user.id,
-                headers: {
-                    Authorization: localStorage.getItem("token")
-                }
-            }).then(res => {
-                const {message} = res.data;
-                console.log(res)
-                if(message === "关注成功"){
-                    this.detail.has_follow = true;
-                    this.$toast.success(message)
-                }
-            })
+    handleFollow() {
+      console.log(123);
+      this.$axios({
+        url: "/user_follows/" + this.detail.user.id,
+        headers: {
+          Authorization: localStorage.getItem("token")
+        }
+      }).then(res => {
+        const { message } = res.data;
+        console.log(res);
+        if (message === "关注成功") {
+          this.detail.has_follow = true;
+          this.$toast.success(message);
+        }
+      });
     },
-    handleUnfollow(){
-            this.$axios({
-                url: "/user_unfollow/" + this.detail.user.id,
-      
-                headers: {
-                    Authorization: localStorage.getItem("token")
-                }
-            }).then(res => {
-                const {message} = res.data;
+    handleUnfollow() {
+      this.$axios({
+        url: "/user_unfollow/" + this.detail.user.id,
 
-                if(message === "取消关注成功"){
-                    this.detail.has_follow = false;
-                    this.$toast.success(message)
-                }
-            })
-        },
+        headers: {
+          Authorization: localStorage.getItem("token")
+        }
+      }).then(res => {
+        const { message } = res.data;
+
+        if (message === "取消关注成功") {
+          this.detail.has_follow = false;
+          this.$toast.success(message);
+        }
+      });
+    },
+    handleStar() {
+      this.$axios({
+        url: "/post_star/" + this.detail.id,
+        headers: {
+          Authorization: localStorage.getItem("token")
+        }
+      }).then(res => {
+        const { message } = res.data;
+
+        if (message === "收藏成功") {
+          this.detail.has_star = true;
+        }
+
+        if (message === "取消成功") {
+          this.detail.has_star = false;
+        }
+
+        this.$toast.success(message);
+      });
+    },
+    handleLike() {
+      this.$axios({
+        url: "/post_like/" + this.detail.id,
+        headers: {
+          Authorization: localStorage.getItem("token")
+        }
+      }).then(res => {
+        const { message } = res.data;
+
+        if (message === "点赞成功") {
+          this.detail.has_like = true;
+          this.detail.like_length++;
+        }
+
+        if (message === "取消成功") {
+          this.detail.has_like = false;
+          this.detail.like_length--;
+        }
+
+        this.$toast.success(message);
+      });
+    },
+
   }
 };
 </script>
@@ -116,7 +162,7 @@ export default {
 <style lang="less" scoped>
 .container {
   padding-bottom: 100 / 360 * 100vw;
-  padding: 0px  15px 100 / 360 * 100vw;
+  padding: 0px 15px 100 / 360 * 100vw;
 }
 .detail {
   border-bottom: 3px solid #999;
@@ -147,11 +193,11 @@ export default {
       color: #fff;
       border-radius: 50px;
     }
-    .focus_active{
-    border: 1px #ccc solid;
-    color:#333;
-    background:none;
-}
+    .focus_active {
+      border: 1px #ccc solid;
+      color: #333;
+      background: none;
+    }
   }
   .detail-info {
     font-size: 12px;
@@ -205,6 +251,9 @@ export default {
     }
     .iconweixin {
       color: #07c907;
+    }
+    .like_active {
+      color: red;
     }
   }
 }

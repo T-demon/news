@@ -8,7 +8,7 @@
         <i class="iconfont iconpinglun-"></i>
       </span>
 
-      <i class="iconfont iconshoucang"></i>
+      <i class="iconfont iconshoucang" :class="{ star_active: post.has_star }" @click="$emit('handleStar')"></i>
 
       <i class="iconfont iconfenxiang"></i>
     </div>
@@ -22,6 +22,7 @@
 
 <script>
 export default {
+    props:["post"],
   data() {
     return {
       isFocus: false,
@@ -43,6 +44,7 @@ export default {
   position: fixed;
   width: 100%;
   bottom: 0px;
+  box-sizing: border-box;
   .footer-a {
     width: 100%;
     display: flex;
@@ -79,6 +81,9 @@ export default {
     }
     .iconfont {
       font-size: 24px;
+    }
+      .star_active{
+      color: yellow;
     }
   }
   .footer-b {
