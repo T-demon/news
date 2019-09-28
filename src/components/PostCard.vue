@@ -3,39 +3,50 @@
     <!-- 单张图显示 -->
     <div class="post" v-if="posts.cover.length>0 && posts.cover.length<3 && posts.type === 1">
       <div class="card-left">
-        <div class="post-title">{{posts.title}}</div>
+        <router-link :to="`/post_detail/${posts.id}`">
+          <div class="post-title">{{posts.title}}</div>
+        </router-link>
+
         <div class="post-info">
           <span>{{posts.user.nickname}}</span>
           <span>跟贴:{{posts.comment_length}}</span>
         </div>
       </div>
-      <div class="card-img">
-        <img :src="posts.cover[0].url" />
-      </div>
+      <router-link :to="`/post_detail/${posts.id}`">
+        <div class="card-img">
+          <img :src="posts.cover[0].url" />
+        </div>
+      </router-link>
     </div>
     <!-- 多张图显示 -->
     <div class="img-cart" v-if="posts.cover.length >= 3">
-      <div class="post-title">{{posts.title}}</div>
-      <div class="img-list">
-        <img v-for="(item, index) in posts.cover" :key="index" :src="item.url" v-if="index < 3" />
-      </div>
-      <p class="post-info">
+      <router-link :to="`/post_detail/${posts.id}`">
+        <div class="post-title">{{posts.title}}</div>
+      </router-link>
+      <router-link :to="`/post_detail/${posts.id}`">
+        <div class="img-list">
+          <img v-for="(item, index) in posts.cover" :key="index" :src="item.url" v-if="index < 3" />
+        </div>
+      </router-link>
+      <p class="posts-info">
         <span>{{posts.user.nickname}}</span>
         <span>{{posts.comment_length}}跟帖</span>
       </p>
     </div>
     <!-- 视频显示 -->
     <div class="video-cart" v-if="posts.type ===2 && posts.cover.length ===1">
-      <div class="post-title">{{posts.title}}</div>
+      <router-link :to="`/post_detail/${posts.id}`">
+        <div class="post-title">{{posts.title}}</div>
+      </router-link>
+      <router-link :to="`/post_detail/${posts.id}`">
+        <div class="video">
+          <img :src="posts.cover[0].url" />
+        </div>
 
-      <div class="video">
-        <img :src="posts.cover[0].url" />
-      </div>
-
-      <span class="video-layer">
-        <i class="iconfont iconshipin"></i>
-      </span>
-
+        <span class="video-layer">
+          <i class="iconfont iconshipin"></i>
+        </span>
+      </router-link>
       <div class="post-info">
         <span>{{posts.user.nickname}}</span>
         <span>跟贴:{{posts.comment_length}}</span>
@@ -140,10 +151,10 @@ export default {
     width: 46/360 * 100vw;
     height: 46/360 * 100vw;
     background-color: rgba(0, 0, 0, 0.5);
-      i{
-        font-size: 40/360*100vw;
-        color: white;
-      }
+    i {
+      font-size: 40/360 * 100vw;
+      color: white;
+    }
   }
   .post-info {
     font-size: 12px;

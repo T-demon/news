@@ -1,5 +1,6 @@
 <template>
   <div>
+  
     <div class="header">
       <div class="logo">
         <span class="iconfont iconnew"></span>
@@ -34,7 +35,6 @@
 
 <script>
 import PostCard from "@/components/PostCard";
-import { log } from "util";
 export default {
   components: {
     PostCard

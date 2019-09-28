@@ -21,6 +21,8 @@ import Edit from "@/pages/Edit";
 import UserFollow from "@/pages/UserFollow";
 import UserComment from "@/pages/UserComment";
 import index from "@/pages/index";
+import PostDetail from "@/pages/PostDetail";
+
 
 
 // 在.vue文件中要使用router-link或者router-view.需要注册下插件
@@ -40,6 +42,7 @@ const routes = [
     { path: "/Edit", component: Edit},
     { path: "/UserFollow", component: UserFollow},
     { path: "/UserComment", component: UserComment},
+    { path: "/post_detail/:id", component: PostDetail},
 
     //新闻板块
     { path: "/", component: index},
