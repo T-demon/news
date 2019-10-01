@@ -20,8 +20,14 @@
     </div>
 
     <div class="footer-b" v-show="isFocus">
-      <textarea rows="3" ref="textarea" @blur="isFocus = false" :autofocus="isFocus"></textarea>
-      <span>发送</span>
+      <textarea
+        rows="3"
+        ref="textarea"
+        v-model="value"
+        @blur="isFocus = false"
+        :autofocus="isFocus"
+      ></textarea>
+      <span @click="handleSubmit">发送</span>
     </div>
   </div>
 </template>
@@ -31,15 +37,41 @@ export default {
   props: ["post"],
   data() {
     return {
-      isFocus: false
+      isFocus: false,
+      // 评论的内容
+      value: ""
     };
   },
-
   methods: {
     handleFocus() {
-      console.log(123);
       this.isFocus = true;
-    }
+      this.isFocus = true;
+    },
+    // 发布评论
+    handleSubmit() {
+      if (!this.value) {
+        return;
+      }
+      this.$axios({
+        url: "/post_comment/" + this.post.id,
+        method: "POST",
+        // 添加头信息
+        headers: {
+          Authorization: localStorage.getItem("token")
+        },
+        data: {
+          content: this.value
+        }
+      }).then(res => {
+        const { message } = res.data;
+        if (message === "评论发布成功") {
+          // 触发父组件方法更新评论的列表
+          this.$emit("getComments", this.post.id);
+          // 隐藏输入框
+          this.isFocus = false;
+        }
+      });
+    },
   }
 };
 </script>
@@ -47,14 +79,16 @@ export default {
 <style scoped lang="less">
 .foot {
   position: fixed;
-  padding: 0px 15px;
+
   width: 100%;
   bottom: 0px;
-  box-sizing: border-box;
+
   .footer-a {
+  padding: 0px 15px;
     width: 100%;
     display: flex;
     justify-content: space-between;
+  box-sizing: border-box;
     align-items: center;
     background-color: #fff;
     input {
