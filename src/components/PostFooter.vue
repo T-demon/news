@@ -3,18 +3,24 @@
     <div class="footer-a" v-show="!isFocus">
       <input type="text" placeholder="写跟帖" @focus="handleFocus" />
 
-      <span class="comment">
-        <em>1020</em>
-        <i class="iconfont iconpinglun-"></i>
-      </span>
+      <router-link :to="`/comment/${post.id}`">
+        <span class="comment">
+          <em>1020</em>
+          <i class="iconfont iconpinglun-"></i>
+        </span>
+      </router-link>
 
-      <i class="iconfont iconshoucang" :class="{ star_active: post.has_star }" @click="$emit('handleStar')"></i>
+      <i
+        class="iconfont iconshoucang"
+        :class="{ star_active: post.has_star }"
+        @click="$emit('handleStar')"
+      ></i>
 
       <i class="iconfont iconfenxiang"></i>
     </div>
 
     <div class="footer-b" v-show="isFocus">
-      <textarea rows="3" ref="textarea"  @blur="isFocus = false" :autofocus="isFocus"></textarea>
+      <textarea rows="3" ref="textarea" @blur="isFocus = false" :autofocus="isFocus"></textarea>
       <span>发送</span>
     </div>
   </div>
@@ -22,19 +28,18 @@
 
 <script>
 export default {
-    props:["post"],
+  props: ["post"],
   data() {
     return {
-      isFocus: false,
-      
+      isFocus: false
     };
   },
- 
+
   methods: {
     handleFocus() {
       console.log(123);
       this.isFocus = true;
-    }, 
+    }
   }
 };
 </script>
@@ -81,7 +86,7 @@ export default {
     .iconfont {
       font-size: 24px;
     }
-      .star_active{
+    .star_active {
       color: yellow;
     }
   }

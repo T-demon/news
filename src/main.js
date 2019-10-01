@@ -22,6 +22,8 @@ import UserFollow from "@/pages/UserFollow";
 import UserComment from "@/pages/UserComment";
 import index from "@/pages/index";
 import PostDetail from "@/pages/PostDetail";
+import comment from "@/pages/comment";
+
 
 
 
@@ -43,6 +45,8 @@ const routes = [
     { path: "/UserFollow", component: UserFollow},
     { path: "/UserComment", component: UserComment},
     { path: "/post_detail/:id", component: PostDetail},
+    { path: "/comment/:id", component: comment},
+
 
     //新闻板块
     { path: "/", component: index},
