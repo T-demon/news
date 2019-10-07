@@ -7,7 +7,7 @@
 import Vue from "vue";
 
 // 路由：1.导入路由构造函数
-import Vant from 'vant';
+import Vant, { Search } from 'vant';
 import { Toast } from 'vant';
 import axios from "axios"
 import VueRouter from "vue-router";
@@ -23,6 +23,8 @@ import UserComment from "@/pages/UserComment";
 import index from "@/pages/index";
 import PostDetail from "@/pages/PostDetail";
 import comment from "@/pages/comment";
+import Search_a from "@/pages/Search";
+
 
 
 
@@ -46,6 +48,8 @@ const routes = [
     { path: "/UserComment", component: UserComment},
     { path: "/post_detail/:id", component: PostDetail},
     { path: "/comment/:id", component: comment},
+    { path: "/search", component: Search_a},
+
 
 
     //新闻板块

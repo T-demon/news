@@ -44,8 +44,10 @@ export default {
     };
   },
   mounted() {
+    // 页面加载时触发 发送axios请求
     this.$axios({
       url: "/user/" + localStorage.getItem("user_id"),
+      //  将服务器返回给本地的token值 加入请求头中
       headers: {
         Authorization: localStorage.getItem("token")
       }
@@ -53,6 +55,7 @@ export default {
       const { data } = res.data;
       console.log(res);
       this.profile = data;
+      // 设置默认头现象
       if (data.head_img) {
         this.profile.head_img =
           this.$axios.defaults.baseURL + this.profile.head_img;
@@ -62,6 +65,7 @@ export default {
     });
   },
   methods: {
+    // 退出时将存在本地的token和用户id进行移除
     handelLoginout: function() {
       localStorage.removeItem("token");
       localStorage.removeItem("user_id");

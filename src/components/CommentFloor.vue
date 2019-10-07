@@ -19,7 +19,9 @@
           {{data.content}}
         </div>
       </div>
+  
   </div>
+
 </template>
 
 <script>

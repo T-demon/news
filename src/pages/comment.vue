@@ -72,7 +72,7 @@ export default {
             loading: false,
             finished: false,
             pageIndex: 1,
-            pageSize: 10
+            pageSize: 5
         }
     },
     // 注册组件

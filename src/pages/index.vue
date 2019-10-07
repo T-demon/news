@@ -1,14 +1,16 @@
+
 <template>
   <div>
-  
     <div class="header">
       <div class="logo">
-        <span class="iconfont iconnew"></span>
+        <span class="iconfont iconnew" ></span>
       </div>
-      <div class="serach">
-        <i class="iconfont iconsearch"></i>
-        <span>搜索新闻</span>
-      </div>
+      <router-link to="/search" class="link-search">
+        <div class="serach">
+          <i class="iconfont iconsearch"></i>
+          <span>搜索新闻</span>
+        </div>
+      </router-link>
       <router-link to="/Personal">
         <span class="iconfont iconwode user"></span>
       </router-link>
@@ -27,6 +29,13 @@
             <!-- 文章模块组件，post是单篇文章详情 -->
             <PostCard v-for="(item, index) in item.posts" :key="index" :posts="item" />
           </van-list>
+          <van-loading 
+            v-if="item.posts.length === 0 && !item.finished"
+            size="24px" 
+            style='margin-top:20px;'
+            vertical 
+            type="spinner" 
+            color="#1989fa">加载中...</van-loading>
         </van-tab>
       </van-tabs>
     </div>
@@ -36,6 +45,7 @@
 <script>
 import PostCard from "@/components/PostCard";
 export default {
+   name: "index",
   components: {
     PostCard
   },
@@ -71,7 +81,7 @@ export default {
         v.posts = [];
         v.loading = false;
         v.finished = false;
-        v.pageIndex =1;
+        v.pageIndex = 1;
         newData.push(v);
       });
 
@@ -80,16 +90,14 @@ export default {
 
       // 请求文章
       this.$axios({
-        url:`/post?category=${this.cid}&pageIndex=${this.pageIndex}&pageSize=${this.pageSize}`
+        url: `/post?category=${this.cid}&pageIndex=${this.pageIndex}&pageSize=${this.pageSize}`
       }).then(res => {
-        console.log(res);
+        // console.log(res);
         const { data } = res.data;
         // console.log(data);
 
         // 默认赋值给头条的列表
         this.categores[this.active].posts = data;
-
-        console.log( this.categores[this.active].posts)
 
         this.categores[this.active].pageIndex++;
       });
@@ -99,11 +107,10 @@ export default {
   methods: {
     onLoad() {
       setTimeout(() => {
-        console.log("触发onload")
 
         const category = this.categores[this.active];
         console.log(category);
-        
+
         this.$axios({
           url: `/post?category=${this.cid}&pageIndex=${category.pageIndex}&pageSize=${this.pageSize}`
         }).then(res => {
@@ -126,7 +133,7 @@ export default {
       this.cid = this.categores[this.active].id;
       console.log(this.cid);
 
-      this.onLoad()
+      this.onLoad();
     }
   }
 };
@@ -146,6 +153,11 @@ export default {
       font-size: 48/360 * 100vw;
     }
   }
+  .link-search{
+        display: block;
+        flex:1;
+        margin:0 10px;
+    }
   .serach {
     flex: 1;
     display: flex;

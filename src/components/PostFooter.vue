@@ -3,12 +3,17 @@
     <div class="footer-a" v-show="!isFocus">
       <input type="text" placeholder="写跟帖" @focus="handleFocus" />
 
-      <router-link :to="`/comment/${post.id}`">
+      <!-- <router-link :to="`/comment/${post.id}`">
         <span class="comment">
           <em>1020</em>
           <i class="iconfont iconpinglun-"></i>
         </span>
-      </router-link>
+      </router-link>-->
+
+      <span class="comment" @click="$router.push(`/comment/${post.id}`)">
+        <em>{{post.comment_length}}</em>
+        <i class="iconfont iconpinglun-"></i>
+      </span>
 
       <i
         class="iconfont iconshoucang"
@@ -24,7 +29,8 @@
         rows="3"
         ref="textarea"
         v-model="value"
-        @blur="isFocus = false"
+        :placeholder="placeholder"
+        @blur="handleBlur"
         :autofocus="isFocus"
       ></textarea>
       <span @click="handleSubmit">发送</span>
@@ -34,24 +40,44 @@
 
 <script>
 export default {
-  props: ["post"],
+  props: ["post", "replyComment"],
   data() {
     return {
       isFocus: false,
       // 评论的内容
-      value: ""
+      value: "",
+      placeholder: "写跟帖"
     };
   },
   methods: {
     handleFocus() {
       this.isFocus = true;
-      this.isFocus = true;
+    },
+    // 输入框失去焦点时候触发
+    handleBlur() {
+      if (!this.value) {
+        this.isFocus = false;
+
+        // 如果有回复的评论，清空回复的评论
+        if (this.replyComment) {
+          this.$emit("handleReply", null);
+          this.placeholder = "写跟帖";
+        }
+      }
     },
     // 发布评论
     handleSubmit() {
       if (!this.value) {
         return;
       }
+      const data = {
+        content: this.value
+      };
+
+      if (this.replyComment) {
+        data.parent_id = this.replyComment.id;
+      }
+
       this.$axios({
         url: "/post_comment/" + this.post.id,
         method: "POST",
@@ -59,19 +85,28 @@ export default {
         headers: {
           Authorization: localStorage.getItem("token")
         },
-        data: {
-          content: this.value
-        }
+        data
       }).then(res => {
         const { message } = res.data;
+        console.log(res);
         if (message === "评论发布成功") {
           // 触发父组件方法更新评论的列表
           this.$emit("getComments", this.post.id);
           // 隐藏输入框
           this.isFocus = false;
+          this.value = "";
+          window.scrollTo(0, 0);
         }
       });
-    },
+    }
+  },
+  watch: {
+    replyComment() {
+        if(this.replyComment){
+                this.isFocus = true;
+                this.placeholder = '@' + this.replyComment.user.nickname;
+            }
+    }
   }
 };
 </script>
@@ -84,11 +119,11 @@ export default {
   bottom: 0px;
 
   .footer-a {
-  padding: 0px 15px;
+    padding: 0px 15px;
     width: 100%;
     display: flex;
     justify-content: space-between;
-  box-sizing: border-box;
+    box-sizing: border-box;
     align-items: center;
     background-color: #fff;
     input {

@@ -5,6 +5,8 @@
  * @LastEditTime: 2019-09-22 20:35:02
  -->
 <template>
+<!-- 输入框要实时显示输入状态 所以一个动态的样式 -->
+<!-- 加上一个change事件 -->
   <input
   class="input"
   :class="{
@@ -26,9 +28,11 @@
 export default {
   data () {
     return {
+      // 存放输入框的状态码
       status:''
     }
   },
+  // 利用组件里的属性传值
   props: [
       "placeholder",
       "value",
@@ -39,9 +43,12 @@ export default {
 
   ],
  methods: {
-        handleInput(event){
+        handleInput(){
+          // 通过事件源对象拿到输入框的value值
             const{value} =event.target
+            // 触发父组件的input事件
             this.$emit("input", value)
+            // 将传递过来的规则对输入款的值进行校验
             if(this.rule){
               if(this.rule.test(value)){
                 this.status = "success";
@@ -50,6 +57,7 @@ export default {
               }
             }
         },
+        // change事件在输入框数据改变后触发 进行弹窗的错误提示
        handleChange(){
             if(this.err_message && this.status === "error"){
                 // alert(this.err_message);

@@ -6,7 +6,9 @@
  -->
 <template>
   <div>
+      <keep-alive include="index,search">
       <router-view></router-view>
+      </keep-alive>
 
   </div>
 </template>
