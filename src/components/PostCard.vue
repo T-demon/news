@@ -59,7 +59,11 @@
 export default {
   props: ["posts"],
   mounted() {
-    // console.log(this.posts);
+   this.posts.cover.forEach(item=>{
+     if(item.url.indexOf("http")===-1){
+        item.url=this.$axios.defaults.baseURL+item.url
+     }
+   })
   }
 };
 </script>
